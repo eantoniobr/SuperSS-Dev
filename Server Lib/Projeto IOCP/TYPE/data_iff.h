@@ -608,7 +608,7 @@ namespace stdA {
 					+ "(0x" + hex_util::ltoaToHex(_typeid) + ")"
 					+ "\r\nC[]: [C0=" + std::to_string((unsigned short)c[0]) + ", C1=" + std::to_string((unsigned short)c[1]) + ", C2="
 							+ std::to_string((unsigned short)c[2]) + ", C3=" + std::to_string((unsigned short)c[3]) + ", C4=" + std::to_string((unsigned short)c[4]) + "]"
-					+ "\r\nPoint: " + std::to_string(point) + "\r\n"; 
+					+ "\r\nPoint: " + std::to_string(point) + "\r\n";
 #else
 				return "Typeid: " + std::to_string(_typeid)
 					+ "(0x" + hex_util::ltoaToHex(_typeid) + ")";
@@ -797,6 +797,18 @@ namespace stdA {
 
 		// Course IFF
 		struct Course : public Base {
+			enum class eDIFFICULTY_TYPE : uint8_t {
+				ONE_STAR,
+				TWO_STAR,
+				THREE_STAR,
+				FOUR_STAR,
+				FIVE_STAR
+			};
+			enum class eDIFFICULTY_FLAG_TYPE : uint8_t {
+				NORMAL,
+				EASY,
+				HARD
+			};
 			void clear() { memset(this, 0, sizeof(Course)); };
 			char mpet[40];
 			char gbin[40];									// By TH S4 - (AmbiendSnd)
@@ -805,7 +817,7 @@ namespace stdA {
 					unsigned char ucStar;
 					struct StarMask {
 						unsigned char star_num : 4;			// By TH S4 - (Difficulty)
-						unsigned char star_size : 4;		// By TH S4 - (DiffFlag)
+						unsigned char star_difficulty : 4;	// By TH S4 - (DiffFlag)
 					};
 					StarMask star_mask;
 				} uStarMask;
